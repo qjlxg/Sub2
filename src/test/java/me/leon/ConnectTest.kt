@@ -19,7 +19,7 @@ class ConnectTest {
         NODE_OK.writeLine()
         runBlocking {
             Parser.parseFromSub(POOL)
-                .map { it to async(DISPATCHER) { it.SERVER.quickConnect(it.serverPort, 2000) } }
+                .map { it to async(DISPATCHER) { it.SERVER.quickConnect(it.serverPort, 200) } }
                 .filter { it.second.await() > -1 }
                 .forEach {
                     println(it.first.info() + ":" + it.second)
@@ -32,7 +32,7 @@ class ConnectTest {
     fun poolPingTest() {
         runBlocking {
             Parser.parseFromSub(POOL)
-                .map { it to async(DISPATCHER) { it.SERVER.quickPing(2000) } }
+                .map { it to async(DISPATCHER) { it.SERVER.quickPing(200) } }
                 .filter { it.second.await() > -1 }
                 .also { println(it.size) }
                 .forEach { println(it.first.info() + ":" + it.second) }
